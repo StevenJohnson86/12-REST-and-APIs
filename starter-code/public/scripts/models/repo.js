@@ -6,8 +6,30 @@
   repos.all = [];
 
   repos.requestRepos = function(callback) {
-    // TODO: How would you like to fetch your repos? Don't forget to call the callback.
-
+    // DONE: How would you like to fetch your repos? Don't forget to call the callback.
+    $.ajax({
+      url: 'https://api.github.com/user/repos',
+      method: 'GET',
+      headers: {
+        Authorization: githubToken
+      }
+    }).then(
+      data => {
+        data.map(repo => {
+          return {
+            title: data.name,
+            description: data.description,
+            language: data.language,
+            dateCreated: data.created_at,
+            lastUpdated: data.updated_at,
+            watchers: data.watchers,
+            watchersCount: data.watchers_count
+          }
+        })
+      },
+      err => {
+        console.error('Status code:', err.status);
+      })
   };
 
   // REVIEW: Model method that filters the full collection for repos with a particular attribute.
