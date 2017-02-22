@@ -15,21 +15,14 @@
       }
     }).then(
       data => {
-        data.map(repo => {
-          return {
-            title: data.name,
-            description: data.description,
-            language: data.language,
-            dateCreated: data.created_at,
-            lastUpdated: data.updated_at,
-            watchers: data.watchers,
-            watchersCount: data.watchers_count
-          }
-        })
+        data.forEach(repo => {
+          repos.all.push(repo);
+        });
+        callback();
       },
       err => {
         console.error('Status code:', err.status);
-      })
+    })
   };
 
   // REVIEW: Model method that filters the full collection for repos with a particular attribute.
